@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import magnifyingGlass from "../Uploads/magnifying.png"; // 이미지 경로
 
+const getKeywordFromURL = (search) => {
+  const params = new URLSearchParams(search);
+  return params.get("keyword") || "";
+};
+
 const SearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const getKeywordFromURL = () => {
-    const params = new URLSearchParams(location.search);
-    return params.get("keyword") || "";
-  };
-
-  const [keyword, setKeyword] = useState(getKeywordFromURL());
+  const [keyword, setKeyword] = useState(getKeywordFromURL(location.search));
 
   useEffect(() => {
-    setKeyword(getKeywordFromURL());
+    setKeyword(getKeywordFromURL(location.search));
   }, [location.search]);
 
   const handleSearch = () => {
