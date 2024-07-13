@@ -1,5 +1,5 @@
-// SearchBar.js
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import magnifyingGlass from "../Uploads/돋보기.png"; // 이미지 경로
 
@@ -49,8 +49,17 @@ const SearchButton = styled.button`
 `;
 
 const SearchBar = () => {
+  const [keyword, setKeyword] = useState("");
+  const navigate = useNavigate();
+
   const handleSearch = () => {
-    alert("Searching..."); // 검색 동작 (나중에 원하는 동작으로 대체)
+    if (keyword.trim() === "") {
+      alert("Please enter a search term.");
+      return;
+    }
+
+    const url = `/search?keyword=${encodeURIComponent(keyword)}`;
+    navigate(url);
   };
 
   const handleKeyPress = (event) => {
@@ -64,6 +73,8 @@ const SearchBar = () => {
       <SearchInput
         type="text"
         placeholder="Enter your search here..."
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
         onKeyPress={handleKeyPress}
       />
       <SearchButton onClick={handleSearch} />
