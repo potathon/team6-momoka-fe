@@ -14,9 +14,8 @@ const MainPage = () => {
     <MainContainer>
       <Header />
       <SearchBar />
-      <MapContainer />
+      {items.length ? <MapContainer /> : <NoResults />}
       <List />
-      {!items.length && <NoResults />}
     </MainContainer>
   );
 };
