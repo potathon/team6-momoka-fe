@@ -25,6 +25,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background-color: #f0f0f0;
+  height: 100vh;
 `;
 
 export default MainPage;

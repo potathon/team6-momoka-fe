@@ -20,7 +20,7 @@ const SearchBar = () => {
 
   const handleSearch = () => {
     if (keyword.trim() === "") {
-      alert("Please enter a search term.");
+      alert("검색어를 입력해주세요.");
       return;
     }
 
