@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
 
-const List = ({ setHasResults }) => {
+const List = () => {
   const { items, setItems } = useResultStore();
   const location = useLocation();
   const [keyword, setKeyword] = useState(
@@ -30,17 +30,15 @@ const List = ({ setHasResults }) => {
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
-          setHasResults(data.length > 0);
         });
     } else {
       fetch("http://localhost:4000/api/restaurant")
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
-          setHasResults(data.length > 0);
         });
     }
-  }, [keyword, setItems, setHasResults]);
+  }, [keyword, setItems]);
 
   return (
     <ListContainer>
