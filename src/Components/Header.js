@@ -1,21 +1,20 @@
 // Header.js
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import jejuImage from '../Uploads/jejudog.jpeg'; // 이미지 경로를 설정
-
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import jejuImage from "../Uploads/jejudog.jpeg"; // 이미지 경로를 설정
 
 const Header = () => {
   const navigate = useNavigate();
 
   const handleTitleClick = () => {
-    navigate('/'); // MainPage로 경로 설정
+    navigate("/"); // MainPage로 경로 설정
   };
 
   return (
     <HeaderContainer>
       <Circle />
-      <Title onClick={handleTitleClick}>momoka</Title>
+      <Title onClick={handleTitleClick}>뭐먹으카</Title>
     </HeaderContainer>
   );
 };
@@ -32,7 +31,7 @@ const HeaderContainer = styled.header`
 const Circle = styled.div`
   width: 30px;
   height: 30px;
-  background-color: #EEEEF0;
+  background-color: #eeeef0;
   border-radius: 50%;
   margin-right: 10px;
   background-image: url(${jejuImage});

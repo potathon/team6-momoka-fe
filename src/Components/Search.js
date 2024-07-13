@@ -63,10 +63,8 @@ const SearchInput = styled.input`
   border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
-  margin-left: 10px; /* 마진을 조정 */
-  margin-right: 10px;
-  padding-left: 16px;
-  padding-right: 40px;
+  margin: 0 10px;
+  padding: 0 40px 0 16px;
 
   &::placeholder {
     font-weight: 300; /* 글씨 얇게 */
@@ -80,7 +78,7 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   position: absolute;
-  right: 18px; /* 위치를 조정 */
+  right: 32px; /* 위치를 조정 */
   background: url(${magnifyingGlass}) no-repeat center center;
   background-size: contain;
   width: 22px;

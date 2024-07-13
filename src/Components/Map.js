@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import KakaoMap from "./KakaoMap.js";
 
-const MapContainer = () => { 
+const MapContainer = () => {
   return (
     <MapWrapper>
       <KakaoMap />
@@ -13,13 +13,13 @@ const MapContainer = () => {
 
 const MapWrapper = styled.div`
   width: 320px; /* 너비를 320px로 설정 */
-  height: 200px;
+  height: 230px;
   background-color: white; /* 임시 배경 */
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #ccc; /* 임시 테두리 */
-  margin: 15px 0; /* 위 아래 15px씩 마진 */
+  padding: 15px 0; /* 위 아래 15px씩 마진 */
+  box-sizing: border-box; /* padding을 포함한 크기 설정 */
 `;
 
 export default MapContainer;
