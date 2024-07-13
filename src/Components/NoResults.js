@@ -1,7 +1,6 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import jejudog2 from '../Uploads/jejudog2.png'; // 이미지 경로를 올바르게 설정
+import jejudog2 from "../Uploads/jejudog2.png"; // 이미지 경로를 올바르게 설정
 
 const NoResults = () => {
   const navigate = useNavigate();
@@ -15,8 +14,11 @@ const NoResults = () => {
     <NoResultsContainer>
       <Suggestions>
         <Message>검색 결과가 없습니다.</Message>
-        <Message>검색 조건을 변경해보세요!!</Message>
-        <Message>추천 검색어 바로가기</Message>
+        <ImageContainer>
+          <StyledImage src={jejudog2} alt="Jeju Dog" />
+        </ImageContainer>
+        <Message2>추천 검색어 바로가기</Message2>
+
         <SuggestionList>
           <SuggestionItem onClick={() => handleSuggestionClick("흑돼지")}>
             흑돼지
@@ -29,26 +31,30 @@ const NoResults = () => {
           </SuggestionItem>
         </SuggestionList>
       </Suggestions>
-      <ImageContainer>
-        <StyledImage src={jejudog2} alt="Jeju Dog" />
-      </ImageContainer>
     </NoResultsContainer>
   );
 };
 
 const NoResultsContainer = styled.div`
-  width: 320px;
+  max-width: 430px;
+  width: 100%;
+  background-color: white;
   display: flex;
   padding: 30px 0px;
   flex-direction: column;
   align-items: center;
-  background-color: white;
+  height: calc(100vh - 160px);
 `;
 
 const Message = styled.h2`
   color: #555;
   margin: 16px 0; /* 세로 간격을 늘리기 위해 변경 */
   text-align: center;
+`;
+
+const Message2 = styled(Message)`
+  margin: 30px 0 20px;
+  color: #000;
 `;
 
 const Suggestions = styled.ul`
@@ -64,15 +70,19 @@ const SuggestionList = styled.div`
   margin: 8px 0;
 `;
 
-const SuggestionItem = styled.li`
+const SuggestionItem = styled.div`
   margin: 0 8px;
-  color: #ffa34e;
+  padding: 9px 16px;
+  color: #fff;
+  background-color: #ffa34e;
+  border-radius: 40px;
   cursor: pointer;
   font-size: 1em;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
 
   &:hover {
-    color: #cc822b;
     text-decoration: underline;
     transform: scale(1.05);
   }
