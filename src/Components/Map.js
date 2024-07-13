@@ -1,6 +1,14 @@
 // MapContainer.js
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
+
+const MapContainer = () => {
+  return (
+    <MapWrapper>
+      <PlaceholderText>Map will be displayed here</PlaceholderText>
+    </MapWrapper>
+  );
+};
 
 const MapWrapper = styled.div`
   width: 336px;
@@ -17,13 +25,5 @@ const PlaceholderText = styled.div`
   font-size: 18px;
   color: #aaa;
 `;
-
-const MapContainer = () => {
-  return (
-    <MapWrapper>
-      <PlaceholderText>Map will be displayed here</PlaceholderText>
-    </MapWrapper>
-  );
-};
 
 export default MapContainer;

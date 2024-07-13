@@ -1,7 +1,24 @@
- // Header.js
+// Header.js
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import jejuImage from '../Uploads/제주도개.jpeg'; // 이미지 경로를 설정
+import jejuImage from '../Uploads/jejudog.jpeg'; // 이미지 경로를 설정
+
+
+const Header = () => {
+  const navigate = useNavigate();
+
+  const handleTitleClick = () => {
+    navigate('/'); // MainPage로 경로 설정
+  };
+
+  return (
+    <HeaderContainer>
+      <Circle />
+      <Title onClick={handleTitleClick}>momoka</Title>
+    </HeaderContainer>
+  );
+};
 
 const HeaderContainer = styled.header`
   width: 320px;
@@ -27,15 +44,7 @@ const Title = styled.h1`
   font-size: 20px;
   font-weight: bold; /* 글씨 굵게 */
   margin: 0;
+  cursor: pointer; /* 클릭 가능한 커서 표시 */
 `;
-
-const Header = () => {
-  return (
-    <HeaderContainer>
-      <Circle />
-      <Title>momoka</Title>
-    </HeaderContainer>
-  );
-};
 
 export default Header;

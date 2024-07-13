@@ -9,7 +9,6 @@ const List = () => {
   const [keyword, setKeyword] = useState(
     new URLSearchParams(location.search).get("keyword")
   );
-  console.log(location);
 
   const changeKeyword = () => {
     setKeyword(new URLSearchParams(location.search).get("keyword"));
@@ -25,7 +24,6 @@ const List = () => {
           .then((response) => response.json())
           .then((data) => {
             setItems(data);
-            console.log(data, 111);
           })
       : fetch("http://localhost:4000/api/restaurant")
           .then((response) => response.json())
@@ -74,12 +72,14 @@ const ListItem = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
   margin: 15px 0 10px 0;
 `;
 
 const Location = styled.p`
   font-size: 14px;
+  color: grey;
   margin: 0 0 10px 0;
 `;
 
@@ -96,6 +96,7 @@ const OperatingHours = styled.p`
 const MenuList = styled.ul`
   list-style: none;
   padding: 0;
+  color: grey;
   margin: 0 0 15px 0;
 `;
 
