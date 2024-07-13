@@ -10,6 +10,12 @@ const List = () => {
   const [keyword, setKeyword] = useState(
     new URLSearchParams(location.search).get("keyword")
   );
+  const clickItem = (item) => {
+    window.open(
+      `https://map.kakao.com/link/search/제주 ${item.name}`,
+      "_blank"
+    );
+  };
 
   const changeKeyword = useCallback(() => {
     setKeyword(new URLSearchParams(location.search).get("keyword"));
@@ -36,14 +42,12 @@ const List = () => {
   return (
     <ListContainer>
       {items?.map((item, index) => (
-        <ListItem key={index}>
+        <ListItem key={index} onClick={() => clickItem(item)}>
           <Title>{item.name}</Title>
           <Location>{item.addr}</Location>
-          <Tell>{item.tel}</Tell>
-          <OperatingHours>{item.info}</OperatingHours>
-          <MenuList>
-            <MenuItem>{item.menu}</MenuItem>
-          </MenuList>
+          <Tel>{item.tel}</Tel>
+          <Info>{item.info}</Info>
+          <MenuItem>{item.menu}</MenuItem>
         </ListItem>
       ))}
     </ListContainer>
@@ -65,10 +69,9 @@ const ListItem = styled.div`
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
-
-  &:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 `;
 
@@ -84,24 +87,21 @@ const Location = styled.p`
   margin: 0 0 10px 0;
 `;
 
-const Tell = styled.p`
+const Tel = styled.p`
   font-size: 14px;
   margin: 0 0 10px 0;
 `;
 
-const OperatingHours = styled.p`
+const Info = styled.p`
   font-size: 14px;
   margin: 0 0 10px 0;
 `;
 
-const MenuList = styled.ul`
+const MenuItem = styled.div`
   list-style: none;
   padding: 0;
   color: grey;
   margin: 0 0 15px 0;
-`;
-
-const MenuItem = styled.li`
   font-size: 14px;
 `;
 
