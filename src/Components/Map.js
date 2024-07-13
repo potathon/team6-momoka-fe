@@ -22,9 +22,4 @@ const MapWrapper = styled.div`
   margin: 15px 0; /* 위 아래 15px씩 마진 */
 `;
 
-const PlaceholderText = styled.div`
-  font-size: 18px;
-  color: #aaa;
-`;
-
 export default MapContainer;
