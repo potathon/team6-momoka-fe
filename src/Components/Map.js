@@ -1,8 +1,6 @@
 // MapContainer.js
-import React from 'react';
-import styled from 'styled-components';
-
-
+import React from "react";
+import styled from "styled-components";
 
 const MapContainer = () => {
   return (
@@ -15,7 +13,7 @@ const MapContainer = () => {
 const MapWrapper = styled.div`
   width: 336px;
   height: 200px;
-  background-color: #white; /* 임시 배경 */
+  background-color: white; /* 임시 배경 */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,6 +25,5 @@ const PlaceholderText = styled.div`
   font-size: 18px;
   color: #aaa;
 `;
-
 
 export default MapContainer;

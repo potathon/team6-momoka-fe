@@ -1,21 +1,47 @@
 // List.js
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import styled from "styled-components";
 
+const List = () => {
+  const [items, setItems] = useState([]);
+  const location = useLocation();
+  const [keyword, setKeyword] = useState(
+    new URLSearchParams(location.search).get("keyword")
+  );
 
-const List = ({ items }) => {
+  const changeKeyword = () => {
+    setKeyword(new URLSearchParams(location.search).get("keyword"));
+  };
+
+  useEffect(() => {
+    changeKeyword();
+  }, [location]);
+
+  useEffect(() => {
+    keyword
+      ? fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+          })
+      : fetch("http://localhost:4000/api/restaurant")
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+          });
+  }, [keyword]);
+
   return (
     <ListContainer>
-      {items.map((item, index) => (
+      {items?.map((item, index) => (
         <ListItem key={index}>
-          <Title>{item.title}</Title>
-          <Location>{item.location}</Location>
-          <Tell>{item.tell}</Tell>
-          <OperatingHours>{item.operatingHours}</OperatingHours>
+          <Title>{item.name}</Title>
+          <Location>{item.addr}</Location>
+          <Tell>{item.tel}</Tell>
+          <OperatingHours>{item.info}</OperatingHours>
           <MenuList>
-            {item.menulist.map((menu, menuIndex) => (
-              <MenuItem key={menuIndex}>{menu}</MenuItem>
-            ))}
+            <MenuItem>{item.menu}</MenuItem>
           </MenuList>
         </ListItem>
       ))}
@@ -34,7 +60,7 @@ const ListContainer = styled.div`
 const ListItem = styled.div`
   padding: 10px;
   width: 288px;
-  border: 1px solid #D9D9DE;
+  border: 1px solid #d9d9de;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
@@ -77,6 +103,5 @@ const MenuList = styled.ul`
 const MenuItem = styled.li`
   font-size: 14px;
 `;
-
 
 export default List;

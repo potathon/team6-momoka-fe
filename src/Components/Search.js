@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import magnifyingGlass from '../Uploads/magnifying.png'; // 이미지 경로
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+import magnifyingGlass from "../Uploads/magnifying.png"; // 이미지 경로
 
 const SearchBar = () => {
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    if (keyword.trim() === '') {
-      alert('Please enter a search term.');
+    if (keyword.trim() === "") {
+      alert("Please enter a search term.");
       return;
     }
 
@@ -18,25 +18,24 @@ const SearchBar = () => {
   };
 
   const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearch();
     }
   };
 
   return (
     <SearchContainer>
-      <SearchInput 
-        type="text" 
-        placeholder="Enter your search here..." 
+      <SearchInput
+        type="text"
+        placeholder="Enter your search here..."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
-        onKeyPress={handleKeyPress} 
+        onKeyPress={handleKeyPress}
       />
       <SearchButton onClick={handleSearch} />
     </SearchContainer>
   );
 };
-
 
 const SearchContainer = styled.div`
   width: 336px;
@@ -50,7 +49,7 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   height: 38px;
   width: 288px;
-  border: 2px solid #FFA34E;
+  border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
   margin-left: 16px;
@@ -64,7 +63,7 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #FFA34E; 
+    border-color: #ffa34e;
   }
 `;
 

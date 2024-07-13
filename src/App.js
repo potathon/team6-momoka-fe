@@ -1,20 +1,15 @@
-// src/App.js
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import './App.css';
-import Page from './Pages/MainPage.jsx'; 
-import Search from './Pages/SearchPage.jsx'
-
+import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import MainPage from "./Pages/MainPage";
+import SearchPage from "./Pages/SearchPage";
 function App() {
   return (
-    <div className="App">
-      <Router>
-        <Routes>
-          <Route path="/" element={<Page />} />
-          <Route path="/search" element={<Search />} />
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/search" element={<SearchPage />} />
+      </Routes>
+    </Router>
   );
 }
 
