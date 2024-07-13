@@ -2,7 +2,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
-import NoResults from "../Components/NoResults.js";
 
 const List = () => {
   const { items, setItems } = useResultStore();
@@ -24,10 +23,41 @@ const List = () => {
   };
 
   const clickItem = (item) => {
-    window.open(
-      `https://map.kakao.com/link/search/제주 ${item.name}`,
-      "_blank"
-    );
+    if (items.length) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2542a7c3d69bd1d3f1565cc7ea51b7a&libraries=services&autoload=false`;
+      document.head.appendChild(script);
+
+      script.onload = async () => {
+        window.kakao.maps.load(async () => {
+          const ps = new window.kakao.maps.services.Places();
+
+          const searchPlace = (keyword) => {
+            return new Promise((resolve, reject) => {
+              ps.keywordSearch(
+                `제주 ${keyword}`,
+                (data, status, pagination) => {
+                  if (status === window.kakao.maps.services.Status.OK) {
+                    resolve(data[0]);
+                  } else {
+                    reject(status);
+                  }
+                }
+              );
+            });
+          };
+
+          searchPlace(item.name)
+            .then((place) => {
+              window.open(place.place_url, "_blank");
+            })
+            .catch((error) => {
+              console.error("Failed to search place: ", error);
+            });
+        });
+      };
+    }
   };
 
   const changeKeyword = useCallback(() => {
@@ -52,7 +82,6 @@ const List = () => {
       fetch(
         "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com:4000/api/restaurant"
       )
-        // fetch("http://localhost:3001/api/restaurant")
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
