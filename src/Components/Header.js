@@ -20,7 +20,8 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
-  width: 320px; /* 너비를 304px로 설정 */
+  max-width: 430px; /* 너비를 304px로 설정 */
+  width: 100%;
   padding: 15px 16px;
   box-sizing: border-box;
   height: 50px;

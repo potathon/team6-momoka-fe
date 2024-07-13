@@ -1,15 +1,12 @@
 // App.js
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Header from "../Components/Header.js";
 import SearchBar from "../Components/Search.js";
 import List from "../Components/List.js";
 import MapContainer from "../Components/Map.js";
-import { useResultStore } from "../store/useResultStore";
 
 const MainPage = () => {
-  const { items } = useResultStore();
-
   return (
     <MainContainer>
       <Header />
@@ -24,8 +21,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
-  background-color: #f0f0f0;
+  overflow-x: auto;
 `;
 
 export default MainPage;

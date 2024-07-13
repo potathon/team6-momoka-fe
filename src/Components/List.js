@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
+import NoResults from "../Components/NoResults.js";
 
 const List = () => {
   const { items, setItems } = useResultStore();
@@ -40,16 +41,18 @@ const List = () => {
   useEffect(() => {
     if (keyword) {
       fetch(
-        `http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant/search?keyword=${keyword}`
+        `http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com:4000/api/restaurant/search?keyword=${keyword}`
       )
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
+          console.log(data);
         });
     } else {
       fetch(
-        "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant"
+        "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com:4000/api/restaurant"
       )
+        // fetch("http://localhost:3001/api/restaurant")
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
@@ -58,25 +61,30 @@ const List = () => {
   }, [keyword, setItems]);
 
   return (
-    <ListContainer>
-      {items?.map((item, index) => (
-        <ListItem key={index} onClick={() => clickItem(item)}>
-          <Title>{item.name}</Title>
-          <Location>{changeAddress(item.addr)}</Location>
-          <Info>운영시간 : {item.info}</Info>
-          <Tel>{item.tel}</Tel>
-          <MenuItem>{changePrice(item.menu)}</MenuItem>
-        </ListItem>
-      ))}
-    </ListContainer>
+    <>
+      {items?.length > 0 && (
+        <ListContainer>
+          {items?.map((item, index) => (
+            <ListItem key={index} onClick={() => clickItem(item)}>
+              <Title>{item.name}</Title>
+              <Location>{changeAddress(item.addr)}</Location>
+              <Info>운영시간 : {item.info}</Info>
+              <Tel>{item.tel}</Tel>
+              <MenuItem>{changePrice(item.menu)}</MenuItem>
+            </ListItem>
+          ))}
+        </ListContainer>
+      )}
+    </>
   );
 };
-
 const ListContainer = styled.div`
-  width: 320px; /* 너비를 320px로 설정 */
-  height: calc(100% - 50px);
-  background-color: #fff;
+  max-width: 430px; /* 너비를 320px로 설정 */
+  width: 100%;
+  min-height: calc(100vh - 340px);
+  height: 100%;
   display: flex;
+  background-color: white;
   flex-direction: column;
   align-items: center;
 `;
@@ -84,14 +92,19 @@ const ListContainer = styled.div`
 const ListItem = styled.div`
   padding: 10px 20px;
   box-sizing: border-box;
-  width: 280px; /* 너비를 280px로 설정 */
+  width: calc(100% - 20px);
+  max-width: 430px;
   border: 1px solid #d9d9de;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
+  background-color: #fff;
   cursor: pointer;
   &:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 
