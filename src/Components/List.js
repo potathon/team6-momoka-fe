@@ -15,6 +15,13 @@ const List = () => {
     return cleanedAddress;
   };
 
+  const changePrice = (price) => {
+    let cleanedPrice = price.replace(/0 /g, "0원 ");
+    cleanedPrice = price.replace(/0$/g, "0원");
+
+    return cleanedPrice;
+  };
+
   const clickItem = (item) => {
     window.open(
       `https://map.kakao.com/link/search/제주 ${item.name}`,
@@ -54,7 +61,7 @@ const List = () => {
           <Location>{changeAddress(item.addr)}</Location>
           <Info>운영시간 : {item.info}</Info>
           <Tel>{item.tel}</Tel>
-          <MenuItem>{item.menu}</MenuItem>
+          <MenuItem>{changePrice(item.menu)}</MenuItem>
         </ListItem>
       ))}
     </ListContainer>
