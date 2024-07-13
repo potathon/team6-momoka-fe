@@ -49,7 +49,7 @@ const SearchBar = () => {
 };
 
 const SearchContainer = styled.div`
-  width: 320px; /* 너비를 320px로 설정 */
+  width: 320px; 
   height: 50px;
   display: flex;
   align-items: center;
@@ -63,10 +63,10 @@ const SearchInput = styled.input`
   border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
-  margin-left: 10px; /* 마진을 조정 */
-  margin-right: 10px; /* 마진을 조정 */
+  margin-left: 10px /* 마진을 조정 */
+  margin-right: 10px; 
   padding-left: 16px;
-  padding-right: 40px; /* 이미지와 텍스트 간격 확보 */
+  padding-right: 40px; 
 
   &::placeholder {
     font-weight: 300; /* 글씨 얇게 */
@@ -80,7 +80,7 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   position: absolute;
-  right: 16px; /* 위치를 조정 */
+  right: 18px; /* 위치를 조정 */
   background: url(${magnifyingGlass}) no-repeat center center;
   background-size: contain;
   width: 22px;

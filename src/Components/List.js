@@ -1,10 +1,9 @@
-// List.js
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
 
-const List = () => {
+const List = ({ setHasResults }) => {
   const { items, setItems } = useResultStore();
   const location = useLocation();
   const [keyword, setKeyword] = useState(
@@ -20,18 +19,22 @@ const List = () => {
   }, [location, changeKeyword]);
 
   useEffect(() => {
-    keyword
-      ? fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setItems(data);
-          })
-      : fetch("http://localhost:4000/api/restaurant")
-          .then((response) => response.json())
-          .then((data) => {
-            setItems(data);
-          });
-  }, [keyword, setItems]);
+    if (keyword) {
+      fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setItems(data);
+          setHasResults(data.length > 0);
+        });
+    } else {
+      fetch("http://localhost:4000/api/restaurant")
+        .then((response) => response.json())
+        .then((data) => {
+          setItems(data);
+          setHasResults(data.length > 0);
+        });
+    }
+  }, [keyword, setItems, setHasResults]);
 
   return (
     <ListContainer>
@@ -67,7 +70,6 @@ const ListItem = styled.div`
   border-radius: 16px;
 
   &:last-child {
-    border-bottom: none;
     margin-bottom: 0;
   }
 `;
