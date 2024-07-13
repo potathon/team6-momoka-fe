@@ -2,6 +2,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
+
+const List = ({ items }) => {
+  return (
+    <ListContainer>
+      {items.map((item, index) => (
+        <ListItem key={index}>
+          <Title>{item.title}</Title>
+          <Location>{item.location}</Location>
+          <Tell>{item.tell}</Tell>
+          <OperatingHours>{item.operatingHours}</OperatingHours>
+          <MenuList>
+            {item.menulist.map((menu, menuIndex) => (
+              <MenuItem key={menuIndex}>{menu}</MenuItem>
+            ))}
+          </MenuList>
+        </ListItem>
+      ))}
+    </ListContainer>
+  );
+};
+
 const ListContainer = styled.div`
   width: 336px;
   background-color: #fff;
@@ -25,12 +46,14 @@ const ListItem = styled.div`
 `;
 
 const Title = styled.h2`
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: bold;
   margin: 15px 0 10px 0;
 `;
 
 const Location = styled.p`
   font-size: 14px;
+  color: grey;
   margin: 0 0 10px 0;
 `;
 
@@ -47,6 +70,7 @@ const OperatingHours = styled.p`
 const MenuList = styled.ul`
   list-style: none;
   padding: 0;
+  color: grey;
   margin: 0 0 15px 0;
 `;
 
@@ -54,24 +78,5 @@ const MenuItem = styled.li`
   font-size: 14px;
 `;
 
-const List = ({ items }) => {
-  return (
-    <ListContainer>
-      {items.map((item, index) => (
-        <ListItem key={index}>
-          <Title>{item.title}</Title>
-          <Location>{item.location}</Location>
-          <Tell>{item.tell}</Tell>
-          <OperatingHours>{item.operatingHours}</OperatingHours>
-          <MenuList>
-            {item.menulist.map((menu, menuIndex) => (
-              <MenuItem key={menuIndex}>{menu}</MenuItem>
-            ))}
-          </MenuList>
-        </ListItem>
-      ))}
-    </ListContainer>
-  );
-};
 
 export default List;

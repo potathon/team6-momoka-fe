@@ -3,6 +3,41 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import magnifyingGlass from '../Uploads/magnifying.png'; // 이미지 경로
 
+const SearchBar = () => {
+  const [keyword, setKeyword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (keyword.trim() === '') {
+      alert('Please enter a search term.');
+      return;
+    }
+
+    const url = `/search?keyword=${encodeURIComponent(keyword)}`;
+    navigate(url);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  return (
+    <SearchContainer>
+      <SearchInput 
+        type="text" 
+        placeholder="Enter your search here..." 
+        value={keyword}
+        onChange={(e) => setKeyword(e.target.value)}
+        onKeyPress={handleKeyPress} 
+      />
+      <SearchButton onClick={handleSearch} />
+    </SearchContainer>
+  );
+};
+
+
 const SearchContainer = styled.div`
   width: 336px;
   height: 50px;
@@ -47,39 +82,5 @@ const SearchButton = styled.button`
     outline: none;
   }
 `;
-
-const SearchBar = () => {
-  const [keyword, setKeyword] = useState('');
-  const navigate = useNavigate();
-
-  const handleSearch = () => {
-    if (keyword.trim() === '') {
-      alert('Please enter a search term.');
-      return;
-    }
-
-    const url = `/search?keyword=${encodeURIComponent(keyword)}`;
-    navigate(url);
-  };
-
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  return (
-    <SearchContainer>
-      <SearchInput 
-        type="text" 
-        placeholder="Enter your search here..." 
-        value={keyword}
-        onChange={(e) => setKeyword(e.target.value)}
-        onKeyPress={handleKeyPress} 
-      />
-      <SearchButton onClick={handleSearch} />
-    </SearchContainer>
-  );
-};
 
 export default SearchBar;
