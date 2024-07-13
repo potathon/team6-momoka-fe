@@ -5,13 +5,16 @@ import Header from "../Components/Header.js";
 import SearchBar from "../Components/Search.js";
 import List from "../Components/List.js";
 import MapContainer from "../Components/Map.js";
+import { useResultStore } from "../store/useResultStore.js";
 
 const MainPage = () => {
+  const { items } = useResultStore();
+
   return (
     <MainContainer>
       <Header />
       <SearchBar />
-      <MapContainer />
+      <MapContainer items={items} />
       <List />
     </MainContainer>
   );

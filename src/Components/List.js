@@ -1,22 +1,23 @@
 // List.js
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+import { useResultStore } from "../store/useResultStore";
 
 const List = () => {
-  const [items, setItems] = useState([]);
+  const { items, setItems } = useResultStore();
   const location = useLocation();
   const [keyword, setKeyword] = useState(
     new URLSearchParams(location.search).get("keyword")
   );
 
-  const changeKeyword = () => {
+  const changeKeyword = useCallback(() => {
     setKeyword(new URLSearchParams(location.search).get("keyword"));
-  };
+  }, [location.search]);
 
   useEffect(() => {
     changeKeyword();
-  }, [location]);
+  }, [location, changeKeyword]);
 
   useEffect(() => {
     keyword
@@ -30,7 +31,7 @@ const List = () => {
           .then((data) => {
             setItems(data);
           });
-  }, [keyword]);
+  }, [keyword, setItems]);
 
   return (
     <ListContainer>
