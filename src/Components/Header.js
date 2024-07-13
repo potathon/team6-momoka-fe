@@ -1,7 +1,7 @@
  // Header.js
 import React from 'react';
 import styled from 'styled-components';
-import jejuImage from '../Uploads/제주도개.jpeg'; // 이미지 경로를 설정
+import jejuImage from '../Uploads/jejudog.jpeg'; // 이미지 경로를 설정
 
 const HeaderContainer = styled.header`
   width: 320px;

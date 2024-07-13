@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import magnifyingGlass from '../Uploads/돋보기.png'; // 이미지 경로
+import magnifyingGlass from '../Uploads/magnifying.png'; // 이미지 경로
 
 const SearchContainer = styled.div`
   width: 336px;
