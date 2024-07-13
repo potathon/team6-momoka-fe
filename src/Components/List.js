@@ -51,7 +51,7 @@ const List = () => {
 };
 
 const ListContainer = styled.div`
-  width: 336px;
+  width: 320px; /* 너비를 320px로 설정 */
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@ const ListContainer = styled.div`
 
 const ListItem = styled.div`
   padding: 10px;
-  width: 288px;
+  width: 280px; /* 너비를 280px로 설정 */
   border: 1px solid #d9d9de;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
