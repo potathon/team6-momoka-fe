@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
@@ -23,10 +23,41 @@ const List = () => {
   };
 
   const clickItem = (item) => {
-    window.open(
-      `https://map.kakao.com/link/search/제주 ${item.name}`,
-      "_blank"
-    );
+    if (items.length) {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2542a7c3d69bd1d3f1565cc7ea51b7a&libraries=services&autoload=false`;
+      document.head.appendChild(script);
+
+      script.onload = async () => {
+        window.kakao.maps.load(async () => {
+          const ps = new window.kakao.maps.services.Places();
+
+          const searchPlace = (keyword) => {
+            return new Promise((resolve, reject) => {
+              ps.keywordSearch(
+                `제주 ${keyword}`,
+                (data, status, pagination) => {
+                  if (status === window.kakao.maps.services.Status.OK) {
+                    resolve(data[0]);
+                  } else {
+                    reject(status);
+                  }
+                }
+              );
+            });
+          };
+
+          searchPlace(item.name)
+            .then((place) => {
+              window.open(place.place_url, "_blank");
+            })
+            .catch((error) => {
+              console.error("Failed to search place: ", error);
+            });
+        });
+      };
+    }
   };
 
   const changeKeyword = useCallback(() => {
@@ -40,7 +71,7 @@ const List = () => {
   useEffect(() => {
     if (keyword) {
       fetch(
-        `http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant/search?keyword=${keyword}`
+        `http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com:4000/api/restaurant/search?keyword=${keyword}`
       )
         .then((response) => response.json())
         .then((data) => {
@@ -48,7 +79,7 @@ const List = () => {
         });
     } else {
       fetch(
-        "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant"
+        "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com:4000/api/restaurant"
       )
         .then((response) => response.json())
         .then((data) => {
@@ -58,25 +89,30 @@ const List = () => {
   }, [keyword, setItems]);
 
   return (
-    <ListContainer>
-      {items?.map((item, index) => (
-        <ListItem key={index} onClick={() => clickItem(item)}>
-          <Title>{item.name}</Title>
-          <Location>{changeAddress(item.addr)}</Location>
-          <Info>운영시간 : {item.info}</Info>
-          <Tel>{item.tel}</Tel>
-          <MenuItem>{changePrice(item.menu)}</MenuItem>
-        </ListItem>
-      ))}
-    </ListContainer>
+    <>
+      {items?.length > 0 && (
+        <ListContainer>
+          {items?.map((item, index) => (
+            <ListItem key={index} onClick={() => clickItem(item)}>
+              <Title>{item.name}</Title>
+              <Location>{changeAddress(item.addr)}</Location>
+              <Info>운영시간 : {item.info}</Info>
+              <Tel>{item.tel}</Tel>
+              <MenuItem>{changePrice(item.menu)}</MenuItem>
+            </ListItem>
+          ))}
+        </ListContainer>
+      )}
+    </>
   );
 };
-
 const ListContainer = styled.div`
-  width: 320px; /* 너비를 320px로 설정 */
-  height: calc(100% - 50px);
-  background-color: #fff;
+  max-width: 430px; /* 너비를 320px로 설정 */
+  width: 100%;
+  min-height: calc(100vh - 340px);
+  height: 100%;
   display: flex;
+  background-color: white;
   flex-direction: column;
   align-items: center;
 `;
@@ -84,14 +120,22 @@ const ListContainer = styled.div`
 const ListItem = styled.div`
   padding: 10px 20px;
   box-sizing: border-box;
-  width: 280px; /* 너비를 280px로 설정 */
-  border: 1px solid #d9d9de;
+  width: calc(100% - 20px);
+  max-width: 430px;
+  border: 1px solid #eeeef0;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
+  background-color: #fff;
   cursor: pointer;
   &:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffa34e;
+    transform: scale(1.01);
+    /* transition: scale 0.3s; */
+  }
+  &:last-child {
+    margin-bottom: 0;
   }
 `;
 

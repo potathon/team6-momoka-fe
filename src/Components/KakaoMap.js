@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useResultStore } from "../store/useResultStore.js";
+import styled from "styled-components";
 
 const KakaoMap = () => {
   const { items } = useResultStore();
@@ -24,11 +25,9 @@ const KakaoMap = () => {
 
           // 장소 검색 객체를 생성합니다
           const ps = new window.kakao.maps.services.Places();
-          // console.log(props);
           const searchKeywordList = items;
-          const restaurantList = [];
-
-          // 키워드로 장소를 검색하는 함수
+          // // 키워드로 장소를 검색하는 함수
+          // console.time("Marker display time (original)");
           const searchPlace = (keyword) => {
             return new Promise((resolve, reject) => {
               ps.keywordSearch(keyword, (data, status, pagination) => {
@@ -40,31 +39,31 @@ const KakaoMap = () => {
               });
             });
           };
+          // 모든 키워드에 대해 병렬로 검색을 수행
+          const searchResults = await Promise.all(
+            // 각 키워드에 대해 searchPlace 함수를 호출하여 Promise 배열 생성
+            searchKeywordList
+              .map((keyword) => searchPlace(`제주 ${keyword.name}`))
+              // 각 Promise에 대해 오류를 처리하여 ZERO_RESULT인 경우 null 반환
+              .map((p) =>
+                p.catch((e) =>
+                  e === window.kakao.maps.services.Status.ZERO_RESULT ? null : e
+                )
+              )
+          );
 
-          // 각 키워드에 대해 검색을 수행
-          for (const keyword of searchKeywordList) {
-            try {
-              const result = await searchPlace(`제주 ${keyword.name}`);
-              restaurantList.push(result);
-            } catch (error) {
-              if (error === window.kakao.maps.services.Status.ZERO_RESULT) {
-              } else {
-                console.error(
-                  `Error occurred while searching for ${keyword.name}:`,
-                  error
-                );
-              }
-            }
-          }
+          // 유효한 검색 결과만 필터링 (null 값 제외)
+          const validResults = searchResults.filter(
+            (result) => result !== null
+          );
 
-          // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-          // LatLngBounds 객체에 좌표를 추가합니다
+          // LatLngBounds 객체를 생성하여 검색된 장소의 좌표를 추가
           const bounds = new window.kakao.maps.LatLngBounds();
-
-          for (const place of restaurantList) {
-            displayMarker(place);
-            bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
-          }
+          validResults.forEach((place) => {
+            displayMarker(place); // 각 장소에 대해 마커를 표시
+            bounds.extend(new window.kakao.maps.LatLng(place.y, place.x)); // 지도 범위에 좌표 추가
+          });
+          // console.timeEnd("Marker display time (original)");
 
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
           map.setBounds(bounds);
@@ -118,29 +117,33 @@ const KakaoMap = () => {
 
   return (
     <>
-      <style>
-        {`
-                .infowindow-content {
-                    padding: 5px;
-                    font-size: 12px;
-                    color: #333;
-                    background-color: #fff;
-                    border: 1px solid #ccc;
-                    border-radius: 5px;
-                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                    }
-                    .infowindow-content a {
-                        color: #1e90ff;
-                        text-decoration: none;
-                    }
-                    .infowindow-content a:hover {
-                        text-decoration: underline;
-                    }
-                    `}
-      </style>
-      <div id="map" style={{ width: "336px", height: "200px" }}></div>
+      <MapContainer id="map" />
     </>
   );
 };
+const MapContainer = styled.div`
+  width: calc(100% - 20px);
+  max-width: 430px;
+  height: 200px;
+
+  .infowindow-content {
+    padding: 5px;
+    font-size: 12px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .infowindow-content a {
+    color: #1e90ff;
+    text-decoration: none;
+  }
+
+  .infowindow-content a:hover {
+    text-decoration: underline;
+  }
+`;
 
 export default KakaoMap;

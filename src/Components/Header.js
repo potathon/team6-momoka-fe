@@ -1,5 +1,4 @@
 // Header.js
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import jejuImage from "../Uploads/jejudog.jpeg"; // 이미지 경로를 설정
@@ -20,7 +19,8 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
-  width: 320px; /* 너비를 304px로 설정 */
+  max-width: 430px; /* 너비를 304px로 설정 */
+  width: 100%;
   padding: 15px 16px;
   box-sizing: border-box;
   height: 50px;

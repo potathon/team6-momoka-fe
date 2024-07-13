@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import Header from "../Components/Header.js";
 import SearchBar from "../Components/Search.js";
@@ -14,7 +13,13 @@ const MainPage = () => {
     <MainContainer>
       <Header />
       <SearchBar />
-      {items.length ? <MapContainer /> : <NoResults />}
+      {items.length ? (
+        <>
+          <MapContainer />
+        </>
+      ) : (
+        <NoResults />
+      )}
       <List />
     </MainContainer>
   );
@@ -24,8 +29,6 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f0f0f0;
-  height: 100vh;
 `;
 
 export default MainPage;

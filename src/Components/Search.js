@@ -1,21 +1,20 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import magnifyingGlass from "../Uploads/magnifying.png"; // 이미지 경로
 
+const getKeywordFromURL = (search) => {
+  const params = new URLSearchParams(search);
+  return params.get("keyword") || "";
+};
+
 const SearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const getKeywordFromURL = () => {
-    const params = new URLSearchParams(location.search);
-    return params.get("keyword") || "";
-  };
-
-  const [keyword, setKeyword] = useState(getKeywordFromURL());
+  const [keyword, setKeyword] = useState(getKeywordFromURL(location.search));
 
   useEffect(() => {
-    setKeyword(getKeywordFromURL());
+    setKeyword(getKeywordFromURL(location.search));
   }, [location.search]);
 
   const handleSearch = () => {
@@ -38,7 +37,7 @@ const SearchBar = () => {
     <SearchContainer>
       <SearchInput
         type="text"
-        placeholder="Enter your search here..."
+        placeholder="검색어를 입력해주세요."
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
         onKeyPress={handleKeyPress}
@@ -49,7 +48,8 @@ const SearchBar = () => {
 };
 
 const SearchContainer = styled.div`
-  width: 320px;
+  max-width: 430px; /* 너비를 304px로 설정 */
+  width: 100%;
   height: 50px;
   display: flex;
   align-items: center;
@@ -59,7 +59,8 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled.input`
   height: 38px;
-  width: 260px; /* 너비를 260px로 설정 */
+  max-width: 430px;
+  width: 100%;
   border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
