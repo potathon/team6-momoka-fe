@@ -1,9 +1,10 @@
+// List.js
 import React, { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
 
-const List = ({ setHasResults }) => {
+const List = () => {
   const { items, setItems } = useResultStore();
   const location = useLocation();
   const [keyword, setKeyword] = useState(
@@ -19,22 +20,18 @@ const List = ({ setHasResults }) => {
   }, [location, changeKeyword]);
 
   useEffect(() => {
-    if (keyword) {
-      fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setItems(data);
-          setHasResults(data.length > 0);
-        });
-    } else {
-      fetch("http://localhost:4000/api/restaurant")
-        .then((response) => response.json())
-        .then((data) => {
-          setItems(data);
-          setHasResults(data.length > 0);
-        });
-    }
-  }, [keyword, setItems, setHasResults]);
+    keyword
+      ? fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+          })
+      : fetch("http://localhost:4000/api/restaurant")
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+          });
+  }, [keyword, setItems]);
 
   return (
     <ListContainer>
@@ -54,7 +51,7 @@ const List = ({ setHasResults }) => {
 };
 
 const ListContainer = styled.div`
-  width: 320px; /* 너비를 320px로 설정 */
+  width: 336px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
@@ -63,13 +60,14 @@ const ListContainer = styled.div`
 
 const ListItem = styled.div`
   padding: 10px;
-  width: 280px; /* 너비를 280px로 설정 */
+  width: 288px;
   border: 1px solid #d9d9de;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
 
   &:last-child {
+    border-bottom: none;
     margin-bottom: 0;
   }
 `;

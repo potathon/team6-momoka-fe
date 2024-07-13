@@ -21,12 +21,12 @@ const Header = () => {
 };
 
 const HeaderContainer = styled.header`
-  width: 304px; /* 너비를 304px로 설정 */
+  width: 320px;
   height: 50px;
   background-color: white;
   display: flex;
   align-items: center;
-  padding-left: 16px; /* padding-left를 그대로 유지 */
+  padding-left: 16px;
 `;
 
 const Circle = styled.div`

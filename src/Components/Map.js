@@ -12,7 +12,7 @@ const MapContainer = () => {
 };
 
 const MapWrapper = styled.div`
-  width: 320px; /* 너비를 320px로 설정 */
+  width: 336px;
   height: 200px;
   background-color: white; /* 임시 배경 */
   display: flex;
