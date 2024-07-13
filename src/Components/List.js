@@ -1,6 +1,55 @@
 // List.js
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
+
+const List = () => {
+  const [items, setItems] = useState([]);
+  const location = useLocation();
+  const [keyword, setKeyword] = useState(
+    new URLSearchParams(location.search).get("keyword")
+  );
+  console.log(location);
+
+  const changeKeyword = () => {
+    setKeyword(new URLSearchParams(location.search).get("keyword"));
+  };
+
+  useEffect(() => {
+    changeKeyword();
+  }, [location]);
+
+  useEffect(() => {
+    keyword
+      ? fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+            console.log(data, 111);
+          })
+      : fetch("http://localhost:4000/api/restaurant")
+          .then((response) => response.json())
+          .then((data) => {
+            setItems(data);
+          });
+  }, [keyword]);
+
+  return (
+    <ListContainer>
+      {items?.map((item, index) => (
+        <ListItem key={index}>
+          <Title>{item.name}</Title>
+          <Location>{item.addr}</Location>
+          <Tell>{item.tel}</Tell>
+          <OperatingHours>{item.info}</OperatingHours>
+          <MenuList>
+            <MenuItem>{item.menu}</MenuItem>
+          </MenuList>
+        </ListItem>
+      ))}
+    </ListContainer>
+  );
+};
 
 const ListContainer = styled.div`
   width: 336px;
@@ -53,33 +102,5 @@ const MenuList = styled.ul`
 const MenuItem = styled.li`
   font-size: 14px;
 `;
-
-const List = () => {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    fetch("http://localhost:4000/api/restaurant")
-      .then((response) => response.json())
-      .then((data) => {
-        setItems(data);
-      });
-  }, []);
-
-  return (
-    <ListContainer>
-      {items?.map((item, index) => (
-        <ListItem key={index}>
-          <Title>{item.name}</Title>
-          <Location>{item.addr}</Location>
-          <Tell>{item.tel}</Tell>
-          <OperatingHours>{item.info}</OperatingHours>
-          <MenuList>
-            <MenuItem>{item.menu}</MenuItem>
-          </MenuList>
-        </ListItem>
-      ))}
-    </ListContainer>
-  );
-};
 
 export default List;
