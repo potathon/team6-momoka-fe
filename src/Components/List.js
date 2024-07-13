@@ -39,6 +39,11 @@ const Tell = styled.p`
   margin: 0 0 10px 0;
 `;
 
+const OperatingHours = styled.p`
+  font-size: 14px;
+  margin: 0 0 10px 0;
+`;
+
 const MenuList = styled.ul`
   list-style: none;
   padding: 0;
@@ -57,6 +62,7 @@ const List = ({ items }) => {
           <Title>{item.title}</Title>
           <Location>{item.location}</Location>
           <Tell>{item.tell}</Tell>
+          <OperatingHours>{item.operatingHours}</OperatingHours>
           <MenuList>
             {item.menulist.map((menu, menuIndex) => (
               <MenuItem key={menuIndex}>{menu}</MenuItem>

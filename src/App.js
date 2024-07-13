@@ -2,7 +2,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Page from './Pages/MainPage.jsx';  // 상대 경로가 맞는지 확인하기
+import Page from './Pages/MainPage.jsx'; 
+import Search from './Pages/SearchPage.jsx'
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<Page />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </Router>
     </div>

@@ -53,9 +53,19 @@ const SearchBar = () => {
     alert('Searching...'); // 검색 동작 (나중에 원하는 동작으로 대체)
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <SearchContainer>
-      <SearchInput type="text" placeholder="Enter your search here..." />
+      <SearchInput 
+        type="text" 
+        placeholder="Enter your search here..." 
+        onKeyPress={handleKeyPress} 
+      />
       <SearchButton onClick={handleSearch} />
     </SearchContainer>
   );

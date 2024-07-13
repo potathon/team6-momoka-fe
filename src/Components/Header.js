@@ -1,6 +1,7 @@
-// Header.js
+ // Header.js
 import React from 'react';
 import styled from 'styled-components';
+import jejuImage from '../Uploads/제주도개.jpeg'; // 이미지 경로를 설정
 
 const HeaderContainer = styled.header`
   width: 320px;
@@ -16,7 +17,10 @@ const Circle = styled.div`
   height: 30px;
   background-color: #EEEEF0;
   border-radius: 50%;
-  margin-right: 10px; 
+  margin-right: 10px;
+  background-image: url(${jejuImage});
+  background-size: cover;
+  background-position: center;
 `;
 
 const Title = styled.h1`
