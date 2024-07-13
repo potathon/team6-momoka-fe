@@ -1,30 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import { useResultStore } from "../store/useResultStore.js";
 
 const KakaoMap = () => {
-    const { items } = useResultStore();
-    console.log(items);
-    useEffect(() => {
-    const script = document.createElement('script');
+  const { items } = useResultStore();
+  useEffect(() => {
+    const script = document.createElement("script");
     script.async = true;
     script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=c2542a7c3d69bd1d3f1565cc7ea51b7a&libraries=services&autoload=false`;
     document.head.appendChild(script);
 
     script.onload = async () => {
       window.kakao.maps.load(async () => {
-        const container = document.getElementById('map'); // 지도를 표시할 div
+        const container = document.getElementById("map"); // 지도를 표시할 div
         const options = {
           center: new window.kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-          level: 3 // 지도의 확대 레벨
+          level: 3, // 지도의 확대 레벨
         };
         const map = new window.kakao.maps.Map(container, options); // 지도를 생성합니다.
-        
+
         // 마커를 클릭하면 장소명을 표출할 인포윈도우입니다
-        const infowindow = new window.kakao.maps.InfoWindow({zIndex: 1});
-        
+        const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
+
         // 장소 검색 객체를 생성합니다
-        const ps = new window.kakao.maps.services.Places(); 
-        // console.log(props);
+        const ps = new window.kakao.maps.services.Places();
         const searchKeywordList = items;
         const restaurantList = [];
 
@@ -47,7 +45,10 @@ const KakaoMap = () => {
             const result = await searchPlace(`제주 ${keyword.name}`);
             restaurantList.push(result);
           } catch (error) {
-            console.error(`Error occurred while searching for ${keyword}:`, error);
+            console.error(
+              `Error occurred while searching for ${keyword}:`,
+              error
+            );
           }
         }
 
@@ -56,7 +57,7 @@ const KakaoMap = () => {
         const bounds = new window.kakao.maps.LatLngBounds();
 
         for (const place of restaurantList) {
-          displayMarker(place);    
+          displayMarker(place);
           bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
         }
 
@@ -65,17 +66,17 @@ const KakaoMap = () => {
 
         // 지도에 마커를 표시하는 함수입니다
         function displayMarker(place) {
-            // 마커를 생성하고 지도에 표시합니다
-            const marker = new window.kakao.maps.Marker({
-                map: map,
-                position: new window.kakao.maps.LatLng(place.y, place.x)
-            });
+          // 마커를 생성하고 지도에 표시합니다
+          const marker = new window.kakao.maps.Marker({
+            map: map,
+            position: new window.kakao.maps.LatLng(place.y, place.x),
+          });
 
-            // 마커에 클릭이벤트를 등록합니다
-            window.kakao.maps.event.addListener(marker, 'click', () => {
-                infowindow.close();
+          // 마커에 클릭이벤트를 등록합니다
+          window.kakao.maps.event.addListener(marker, "click", () => {
+            infowindow.close();
 
-                infowindow.setContent(`
+            infowindow.setContent(`
                 <div class="wrap"> 
                     <div class="infowindow-content">
                         <div class="title">
@@ -94,14 +95,14 @@ const KakaoMap = () => {
                 </div>
                 `);
 
-                // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
-                infowindow.open(map, marker);
-            });
+            // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+            infowindow.open(map, marker);
+          });
 
-            // 지도 클릭 이벤트를 추가하여 인포윈도우 닫기
-            window.kakao.maps.event.addListener(map, 'click', () => {
-                infowindow.close();
-            });
+          // 지도 클릭 이벤트를 추가하여 인포윈도우 닫기
+          window.kakao.maps.event.addListener(map, "click", () => {
+            infowindow.close();
+          });
         }
       });
     };
@@ -110,9 +111,9 @@ const KakaoMap = () => {
   }, [items]);
 
   return (
-          <>
-            <style>
-                {`
+    <>
+      <style>
+        {`
                 .infowindow-content {
                     padding: 5px;
                     font-size: 12px;
@@ -130,9 +131,9 @@ const KakaoMap = () => {
                         text-decoration: underline;
                     }
                     `}
-            </style>
-            <div id="map" style={{ width: '336px', height: '200px' }}></div>
-        </>
+      </style>
+      <div id="map" style={{ width: "336px", height: "200px" }}></div>
+    </>
   );
 };
 
