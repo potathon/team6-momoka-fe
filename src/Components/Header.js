@@ -1,5 +1,4 @@
 // Header.js
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import jejuImage from "../Uploads/jejudog.jpeg"; // 이미지 경로를 설정

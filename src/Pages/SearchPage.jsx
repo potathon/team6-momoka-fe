@@ -1,4 +1,3 @@
-import React, { useEffect, useState, useCallback } from "react";
 import styled from "styled-components";
 import Header from "../Components/Header.js";
 import SearchBar from "../Components/Search.js";

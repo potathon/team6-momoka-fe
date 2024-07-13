@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useResultStore } from "../store/useResultStore.js";
 import styled from "styled-components";
 
@@ -25,13 +25,9 @@ const KakaoMap = () => {
 
           // 장소 검색 객체를 생성합니다
           const ps = new window.kakao.maps.services.Places();
-          // console.log(props);
           const searchKeywordList = items;
-
-          // #############테스트######################
-
           // // 키워드로 장소를 검색하는 함수
-          console.time("Marker display time (original)");
+          // console.time("Marker display time (original)");
           const searchPlace = (keyword) => {
             return new Promise((resolve, reject) => {
               ps.keywordSearch(keyword, (data, status, pagination) => {
@@ -67,54 +63,7 @@ const KakaoMap = () => {
             displayMarker(place); // 각 장소에 대해 마커를 표시
             bounds.extend(new window.kakao.maps.LatLng(place.y, place.x)); // 지도 범위에 좌표 추가
           });
-          console.timeEnd("Marker display time (original)");
-
-          //###############테스트 end#####################
-
-          //###############변경전 end#####################
-          // // 기존 코드
-          // const restaurantList = [];
-          // console.time("Marker display time (original)");
-
-          // // 키워드로 장소를 검색하는 함수
-          // const searchPlace = (keyword) => {
-          //   return new Promise((resolve, reject) => {
-          //     ps.keywordSearch(keyword, (data, status, pagination) => {
-          //       if (status === window.kakao.maps.services.Status.OK) {
-          //         resolve(data[0]);
-          //       } else {
-          //         reject(status);
-          //       }
-          //     });
-          //   });
-          // };
-
-          // // 각 키워드에 대해 검색을 수행
-          // for (const keyword of searchKeywordList) {
-          //   try {
-          //     const result = await searchPlace(`제주 ${keyword.name}`);
-          //     restaurantList.push(result);
-          //   } catch (error) {
-          //     if (error === window.kakao.maps.services.Status.ZERO_RESULT) {
-          //     } else {
-          //       console.error(
-          //         `Error occurred while searching for ${keyword.name}:`,
-          //         error
-          //       );
-          //     }
-          //   }
-          // }
-
-          // // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-          // // LatLngBounds 객체에 좌표를 추가합니다
-          // const bounds = new window.kakao.maps.LatLngBounds();
-
-          // for (const place of restaurantList) {
-          //   displayMarker(place);
-          //   bounds.extend(new window.kakao.maps.LatLng(place.y, place.x));
-          // }
           // console.timeEnd("Marker display time (original)");
-          //###############변경전 end#####################
 
           // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
           map.setBounds(bounds);

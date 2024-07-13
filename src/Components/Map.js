@@ -1,5 +1,4 @@
-// MapContainer.js
-import React from "react";
+// Map.js
 import styled from "styled-components";
 import KakaoMap from "./KakaoMap.js";
 

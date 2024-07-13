@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { useResultStore } from "../store/useResultStore";
@@ -76,7 +76,6 @@ const List = () => {
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
-          console.log(data);
         });
     } else {
       fetch(
