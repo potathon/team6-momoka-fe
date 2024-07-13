@@ -39,13 +39,17 @@ const List = () => {
 
   useEffect(() => {
     if (keyword) {
-      fetch(`http://localhost:4000/api/restaurant/search?keyword=${keyword}`)
+      fetch(
+        `http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant/search?keyword=${keyword}`
+      )
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
         });
     } else {
-      fetch("http://localhost:4000/api/restaurant")
+      fetch(
+        "http://ec2-52-79-127-33.ap-northeast-2.compute.amazonaws.com/api/restaurant"
+      )
         .then((response) => response.json())
         .then((data) => {
           setItems(data);
@@ -70,6 +74,7 @@ const List = () => {
 
 const ListContainer = styled.div`
   width: 320px; /* 너비를 320px로 설정 */
+  height: calc(100% - 50px);
   background-color: #fff;
   display: flex;
   flex-direction: column;
