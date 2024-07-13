@@ -1,11 +1,22 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import styled from "styled-components";
 import magnifyingGlass from "../Uploads/magnifying.png"; // 이미지 경로
 
 const SearchBar = () => {
-  const [keyword, setKeyword] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const getKeywordFromURL = () => {
+    const params = new URLSearchParams(location.search);
+    return params.get("keyword") || "";
+  };
+
+  const [keyword, setKeyword] = useState(getKeywordFromURL());
+
+  useEffect(() => {
+    setKeyword(getKeywordFromURL());
+  }, [location.search]);
 
   const handleSearch = () => {
     if (keyword.trim() === "") {
@@ -38,7 +49,7 @@ const SearchBar = () => {
 };
 
 const SearchContainer = styled.div`
-  width: 336px;
+  width: 320px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -48,14 +59,14 @@ const SearchContainer = styled.div`
 
 const SearchInput = styled.input`
   height: 38px;
-  width: 288px;
+  width: 260px; /* 너비를 260px로 설정 */
   border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
-  margin-left: 16px;
-  margin-right: 16px;
+  margin-left: 10px; /* 마진을 조정 */
+  margin-right: 10px;
   padding-left: 16px;
-  padding-right: 40px; /* 이미지와 텍스트 간격 확보 */
+  padding-right: 40px;
 
   &::placeholder {
     font-weight: 300; /* 글씨 얇게 */
@@ -69,7 +80,7 @@ const SearchInput = styled.input`
 
 const SearchButton = styled.button`
   position: absolute;
-  right: 26px;
+  right: 18px; /* 위치를 조정 */
   background: url(${magnifyingGlass}) no-repeat center center;
   background-size: contain;
   width: 22px;
