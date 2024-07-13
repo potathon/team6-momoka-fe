@@ -1,6 +1,6 @@
 // List.js
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import styled from "styled-components";
 
 const ListContainer = styled.div`
   width: 336px;
@@ -13,7 +13,7 @@ const ListContainer = styled.div`
 const ListItem = styled.div`
   padding: 10px;
   width: 288px;
-  border: 1px solid #D9D9DE;
+  border: 1px solid #d9d9de;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
@@ -49,18 +49,26 @@ const MenuItem = styled.li`
   font-size: 14px;
 `;
 
-const List = ({ items }) => {
+const List = () => {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:4000/api/restaurant")
+      .then((response) => response.json())
+      .then((data) => {
+        setItems(data);
+      });
+  }, []);
+
   return (
     <ListContainer>
-      {items.map((item, index) => (
+      {items?.map((item, index) => (
         <ListItem key={index}>
-          <Title>{item.title}</Title>
-          <Location>{item.location}</Location>
-          <Tell>{item.tell}</Tell>
+          <Title>{item.name}</Title>
+          <Location>{item.addr}</Location>
+          <Tell>{item.tel}</Tell>
           <MenuList>
-            {item.menulist.map((menu, menuIndex) => (
-              <MenuItem key={menuIndex}>{menu}</MenuItem>
-            ))}
+            <MenuItem>{item.menu}</MenuItem>
           </MenuList>
         </ListItem>
       ))}

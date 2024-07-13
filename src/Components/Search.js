@@ -1,7 +1,7 @@
 // SearchBar.js
-import React from 'react';
-import styled from 'styled-components';
-import magnifyingGlass from '../Uploads/돋보기.png'; // 이미지 경로
+import React from "react";
+import styled from "styled-components";
+import magnifyingGlass from "../Uploads/돋보기.png"; // 이미지 경로
 
 const SearchContainer = styled.div`
   width: 336px;
@@ -15,7 +15,7 @@ const SearchContainer = styled.div`
 const SearchInput = styled.input`
   height: 38px;
   width: 288px;
-  border: 2px solid #FFA34E;
+  border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
   margin-left: 16px;
@@ -29,7 +29,7 @@ const SearchInput = styled.input`
 
   &:focus {
     outline: none;
-    border-color: #FFA34E; 
+    border-color: #ffa34e;
   }
 `;
 
@@ -50,12 +50,22 @@ const SearchButton = styled.button`
 
 const SearchBar = () => {
   const handleSearch = () => {
-    alert('Searching...'); // 검색 동작 (나중에 원하는 동작으로 대체)
+    alert("Searching..."); // 검색 동작 (나중에 원하는 동작으로 대체)
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
   };
 
   return (
     <SearchContainer>
-      <SearchInput type="text" placeholder="Enter your search here..." />
+      <SearchInput
+        type="text"
+        placeholder="Enter your search here..."
+        onKeyPress={handleKeyPress}
+      />
       <SearchButton onClick={handleSearch} />
     </SearchContainer>
   );
