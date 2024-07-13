@@ -1,21 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import Header from "../Components/Header.js";
 import SearchBar from "../Components/Search.js";
 import List from "../Components/List.js";
 import MapContainer from "../Components/Map.js";
 import NoResults from "../Components/NoResults.js";
+import { useResultStore } from "../store/useResultStore";
 
 const MainPage = () => {
-  const [hasResults, setHasResults] = useState(true);
+  const { items } = useResultStore();
 
   return (
     <MainContainer>
       <Header />
       <SearchBar />
       <MapContainer />
-      <List setHasResults={setHasResults} />
-      {!hasResults && <NoResults />}
+      <List />
+      {!items.length && <NoResults />}
     </MainContainer>
   );
 };

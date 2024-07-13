@@ -6,7 +6,7 @@ import magnifyingGlass from "../Uploads/magnifying.png"; // 이미지 경로
 const SearchBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const getKeywordFromURL = () => {
     const params = new URLSearchParams(location.search);
     return params.get("keyword") || "";
@@ -49,7 +49,7 @@ const SearchBar = () => {
 };
 
 const SearchContainer = styled.div`
-  width: 320px; 
+  width: 320px;
   height: 50px;
   display: flex;
   align-items: center;
@@ -63,10 +63,10 @@ const SearchInput = styled.input`
   border: 2px solid #ffa34e;
   border-radius: 50px;
   font-size: 14px;
-  margin-left: 10px /* 마진을 조정 */
-  margin-right: 10px; 
+  margin-left: 10px; /* 마진을 조정 */
+  margin-right: 10px;
   padding-left: 16px;
-  padding-right: 40px; 
+  padding-right: 40px;
 
   &::placeholder {
     font-weight: 300; /* 글씨 얇게 */
