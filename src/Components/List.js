@@ -122,7 +122,7 @@ const ListItem = styled.div`
   box-sizing: border-box;
   width: calc(100% - 20px);
   max-width: 430px;
-  border: 1px solid #d9d9de;
+  border: 1px solid #eeeef0;
   margin-top: 7.5px;
   margin-bottom: 7.5px;
   border-radius: 16px;
@@ -130,6 +130,9 @@ const ListItem = styled.div`
   cursor: pointer;
   &:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ffa34e;
+    transform: scale(1.01);
+    /* transition: scale 0.3s; */
   }
   &:last-child {
     margin-bottom: 0;
