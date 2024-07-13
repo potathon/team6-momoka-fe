@@ -1,11 +1,12 @@
 // MapContainer.js
 import React from "react";
 import styled from "styled-components";
+import KakaoMap from "./KakaoMap.js";
 
-const MapContainer = () => {
+const MapContainer = () => { 
   return (
     <MapWrapper>
-      <PlaceholderText>Map will be displayed here</PlaceholderText>
+      <KakaoMap />
     </MapWrapper>
   );
 };
